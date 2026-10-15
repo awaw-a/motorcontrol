@@ -2,3 +2,11 @@
 	path = Modules/BasicComponents
 	url = https://github.com/HITSZ-WTRobot-Packages/BasicComponents.git
 	branch = main
+[submodule "Modules/MotorDrivers"]
+	path = Modules/MotorDrivers
+	url = https://github.com/HITSZ-WTRobot-Packages/MotorDrivers.git
+	branch = main
+[submodule "Modules/VelocityProfile"]
+	path = Modules/VelocityProfile
+	url = https://github.com/HITSZ-WTRobot-Packages/VelocityProfile.git
+	branch = main

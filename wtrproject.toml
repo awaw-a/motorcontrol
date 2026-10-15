@@ -6,5 +6,11 @@ ioc_file = "motorcontrol.ioc"
 
 [dependencies]
 packages = [
+    "MotorDrivers::Controller",
+    "MotorDrivers::DJI",
+    "VelocityProfile::Core",
+    "bsp::GPIO_Driver",
+    "libs::CRC",
     "memory::StaticObject",
+    "protocol::UartRxSync",
 ]
