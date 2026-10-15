@@ -11,6 +11,18 @@ cmake_minimum_required(VERSION 3.22)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# disable cxa_atexit to avoid global/static destructor registration
+# suitable for bare-metal targets without process exit
+add_compile_options(
+        $<$<COMPILE_LANGUAGE:CXX>:-fno-use-cxa-atexit>
+)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS ON)
 
 
 # Define the build type
@@ -29,7 +41,7 @@ project(${CMAKE_PROJECT_NAME})
 message("Build type: " ${CMAKE_BUILD_TYPE})
 
 # Enable CMake support for ASM and C languages
-enable_language(C ASM)
+enable_language(C CXX ASM)
 
 # Create an executable object type
 add_executable(${CMAKE_PROJECT_NAME})
@@ -43,12 +55,17 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 )
 
 # Add sources to executable
+file(GLOB_RECURSE USER_CODE_SOURCES "UserCode/*.*")
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+    UserCode/usercode1.cpp
     # Add user sources here
+    ${USER_CODE_SOURCES}
 )
 
 # Add include paths
+include_directories(UserCode)
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+    UserCode
     # Add user defined include paths
 )
 
@@ -59,6 +76,18 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
 
 # Remove wrong libob.a library dependency when using cpp files
 list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
+
+include(cmake/wtr_modules.cmake)
+
+wtr_link_packages(${CMAKE_PROJECT_NAME})
+
+# Add driver module dependencies here
+# ===================== DEPENDENCIES =====================
+# e.g.
+# add_subdirectory(Modules/YourDriver)
+# target_link_libraries(${CMAKE_PROJECT_NAME} YourDriver)
+
+# =======================================================
 
 # Add linked libraries
 target_link_libraries(${CMAKE_PROJECT_NAME}

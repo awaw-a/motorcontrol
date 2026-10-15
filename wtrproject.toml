@@ -1,0 +1,10 @@
+format_version = 1
+
+[project]
+name = "motorcontrol"
+ioc_file = "motorcontrol.ioc"
+
+[dependencies]
+packages = [
+    "memory::StaticObject",
+]
