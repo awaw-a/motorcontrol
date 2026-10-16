@@ -1,0 +1,5 @@
+format_version = 1
+name = "Controller"
+pkgname = "MotorDrivers::Controller"
+version = "0.1.0"
+dependencies = ["MotorDrivers::Core", "libs::PIDMotor"]

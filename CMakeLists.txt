@@ -45,6 +45,10 @@ enable_language(C CXX ASM)
 
 # Create an executable object type
 add_executable(${CMAKE_PROJECT_NAME})
+option(MOTORCONTROL_USE_M2006 "Use M2006/C610 instead of M3508/C620" OFF)
+target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
+    USE_M2006_MOTOR=$<BOOL:${MOTORCONTROL_USE_M2006}>
+)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
@@ -57,7 +61,6 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 file(GLOB_RECURSE USER_CODE_SOURCES "UserCode/*.*")
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-    UserCode/usercode1.cpp
     # Add user sources here
     ${USER_CODE_SOURCES}
 )

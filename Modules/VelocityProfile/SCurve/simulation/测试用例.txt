@@ -1,0 +1,129 @@
+TEST_CASES = [
+      {
+          "name": "normal_direct",
+          "args": dict(
+              xs=0.0, xe=3.0,
+              vs=0.0, as_=0.0,
+              vm=2.0, am=1.0, jm=2.0,
+              ve=0.0, ae=0.0,
+          ),
+          "expect": "普通可解，不走 prefix/suffix",
+      },
+      {
+          "name": "start_speed_over_limit",
+          "args": dict(
+              xs=0.0, xe=1.0,
+              vs=4.0, as_=0.0,
+              vm=1.5, am=1.0, jm=2.0,
+              ve=0.0, ae=0.0,
+          ),
+          "expect": "起点速度超限，走 stop prefix，再回
+          目标",
+      },
+      {
+          "name": "start_acc_over_limit",
+          "args": dict(
+              xs=0.0, xe=1.0,
+              vs=0.5, as_=2.5,
+              vm=1.5, am=1.0, jm=2.0,
+              ve=0.0, ae=0.0,
+          ),
+          "expect": "起点加速度超限，应该成功，不直接失
+          败",
+      },
+      {
+          "name": "inevitable_overspeed_from_acc",
+          "args": dict(
+              xs=0.0, xe=2.0,
+              vs=0.9, as_=1.0,
+              vm=1.0, am=1.0, jm=2.0,
+              ve=0.0, ae=0.0,
+          ),
+          "expect": "vs 本身未超限，但按当前 a 会冲过
+          vm，应成功",
+      },
+      {
+          "name": "too_short_must_overshoot",
+          "args": dict(
+              xs=0.0, xe=0.2,
+              vs=1.0, as_=1.0,
+              vm=1.5, am=1.0, jm=2.0,
+              ve=0.0, ae=0.0,
+          ),
+          "expect": "距离太短，必须先越过 xe 再反向回
+          来",
+      },
+      {
+          "name": "same_position_nonzero_start",
+          "args": dict(
+              xs=0.0, xe=0.0,
+              vs=1.0, as_=0.5,
+              vm=1.5, am=1.0, jm=2.0,
+              ve=0.0, ae=0.0,
+          ),
+          "expect": "xs==xe 但起点非静止，不能直接零时
+          间成功，应先动再回",
+      },
+      {
+          "name": "end_velocity_nonzero",
+          "args": dict(
+              xs=0.0, xe=1.0,
+              vs=0.2, as_=-1.2,
+              vm=1.0, am=1.0, jm=2.0,
+              ve=0.5, ae=0.0,
+          ),
+          "expect": "终点速度非零，走 suffix，末端收敛
+          到 ve",
+      },
+      {
+          "name": "negative_limits_allowed_by_abs",
+          "args": dict(
+              xs=0.0, xe=2.0,
+              vs=0.0, as_=0.0,
+              vm=-2.0, am=-1.0, jm=-2.0,
+              ve=0.0, ae=0.0,
+          ),
+          "expect": "limit 输入为负，但 abs 后有效，应
+          成功",
+      },
+      {
+          "name": "fail_nonfinite",
+          "args": dict(
+              xs=0.0, xe=1.0,
+              vs=float("nan"), as_=0.0,
+              vm=1.0, am=1.0, jm=1.0,
+              ve=0.0, ae=0.0,
+          ),
+          "expect": "应失败，非有限输入",
+      },
+      {
+          "name": "fail_zero_abs_limit",
+          "args": dict(
+              xs=0.0, xe=1.0,
+              vs=0.0, as_=0.0,
+              vm=0.0, am=1.0, jm=1.0,
+              ve=0.0, ae=0.0,
+          ),
+          "expect": "应失败，abs(vm)<=0",
+      },
+      {
+          "name": "fail_end_velocity_limit",
+          "args": dict(
+              xs=0.0, xe=1.0,
+              vs=0.0, as_=0.0,
+              vm=1.0, am=1.0, jm=1.0,
+              ve=2.0, ae=0.0,
+          ),
+          "expect": "应失败，ve 超限",
+      },
+      {
+          "name": "fail_end_acc_limit",
+          "args": dict(
+              xs=0.0, xe=1.0,
+              vs=0.0, as_=0.0,
+              vm=1.0, am=1.0, jm=1.0,
+              ve=0.0, ae=2.0,
+          ),
+          "expect": "应失败，ae 超限",
+      },
+  ]

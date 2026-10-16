@@ -1,0 +1,5 @@
+format_version = 1
+name = "Concurrency"
+pkgname = "libs::Concurrency"
+version = "0.2.0"
+dependencies = []

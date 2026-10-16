@@ -1,0 +1,5 @@
+format_version = 1
+name = "UartRxSync"
+pkgname = "protocol::UartRxSync"
+version = "0.1.0"
+dependencies = ["memory::DMABuffer", "services::Watchdog", "stm32cubemx"]

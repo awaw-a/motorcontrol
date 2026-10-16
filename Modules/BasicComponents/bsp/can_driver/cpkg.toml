@@ -1,0 +1,5 @@
+format_version = 1
+name = "CANDriver"
+pkgname = "bsp::CANDriver"
+version = "0.1.0"
+dependencies = ["libs::RingBuffer", "stm32cubemx", "utils"]

@@ -12,5 +12,5 @@ packages = [
     "bsp::GPIO_Driver",
     "libs::CRC",
     "memory::StaticObject",
-    "protocol::UartRxSync",
+    "memory::DMABuffer",
 ]

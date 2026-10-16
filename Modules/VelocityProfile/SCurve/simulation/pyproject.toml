@@ -1,0 +1,11 @@
+[project]
+name = "s-curve"
+version = "0.1.0"
+author = "syhanjin"
+description = "Velocity, Acceleration, and Jerk limits with initial values"
+readme = "README.md"
+requires-python = ">=3.12.11"
+dependencies = [
+    "matplotlib>=3.10.8",
+    "numpy>=2.3.5",
+]
